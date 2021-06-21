@@ -14,10 +14,9 @@ const app = express();
 // middleware
 app.use(express.static('public'));
 app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 
-// view engine
-app.set('view engine', 'ejs');
 
 // Atlas Database Connection
 const dbURI = process.env.MONGODB_URI
