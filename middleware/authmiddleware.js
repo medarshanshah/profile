@@ -41,6 +41,54 @@ const checkUser = (req, res, next) => {
   }
 };
 
+//check admin
+const checkAdmin = (req, res, next) => {
+  const token = req.cookies.jwt;
+  if (token) {
+    jwt.verify(token, process.env.APP_SECRET, async (err, decodedToken) => {
+      if (err) {
+        res.locals.user = null;
+        next();
+      } else {
+        let user = await User.findById(decodedToken.id)
+        if (user.userType === 'admin') {
+          res.locals.user = user;
+          next()
+        }
+        next();
+      }
+    });
+  } else {
+    res.locals.user = null;
+    next();
+  }
+};
 
-module.exports = { requireAuth, checkUser };
+
+//check merchant
+const checkMerchant = (req, res, next) => {
+  const token = req.cookies.jwt;
+  if (token) {
+    jwt.verify(token, process.env.APP_SECRET, async (err, decodedToken) => {
+      if (err) {
+        res.locals.user = null;
+        next();
+      } else {
+        let user = await User.findById(decodedToken.id)
+        if (user.userType === 'merchant') {
+          res.locals.user = user;
+          next()
+        }
+        next();
+      }
+    });
+  } else {
+    res.locals.user = null;
+    next();
+  }
+};
+
+
+
+module.exports = { requireAuth, checkUser, checkAdmin, checkMerchant };
 

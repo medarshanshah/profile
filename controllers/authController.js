@@ -61,7 +61,7 @@ module.exports.signup_post = async (req, res) => {
     const user = await User.create({ email, password });
     const token = createToken(user._id);
     let userId = user._id
-    let cart = await axios.post('http://localhost:7000/cart/cart_create', { userId } )
+    let cart = await axios.post('http://localhost:3005/cart/cart_create', { userId } )
     let cartId  = cart.data._id
     
     // saving cartId into DB

@@ -20,7 +20,8 @@ const userSchema = new mongoose.Schema({
   },
   userType: {
     type: String,
-    lowercase: true
+    lowercase: true,
+    default: "customer"
   },
   address: {
     type: [{
